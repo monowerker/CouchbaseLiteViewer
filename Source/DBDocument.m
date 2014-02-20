@@ -48,8 +48,10 @@
         if (outError) *outError = error;
         return NO;
     }
-    _db = [_manager databaseNamed: _path.lastPathComponent.stringByDeletingPathExtension
-                           error: &error];
+    NSString *fixedDelimPath = [_path.lastPathComponent.stringByDeletingPathExtension stringByReplacingOccurrencesOfString: @":"
+                                                                                                                withString: @"/"];
+    _db = [_manager databaseNamed: fixedDelimPath
+                            error: &error];
     if (!_db) {
         if (outError) *outError = error;
         return NO;
